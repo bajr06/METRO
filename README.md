@@ -1,4 +1,4 @@
-Ejercicios en Grupos de Tres, comformador por:
+Ejercicios en Grupos de Tres, conformado por:
 - Bryan
 - Sofia
 - Leonardo

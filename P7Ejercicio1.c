@@ -7,9 +7,19 @@ int Burbuja(const void * n1, const void * n2){
 }
 
 void Anaidir(int * lista, const int cantidad){
+	int control;
+	
 	printf("Escriba cada número a añadir a la lista\n");
 	for(int i = 0; i < cantidad; i++){
-		 scanf("%d", &lista[i]);
+		 control = scanf("%d", &lista[i]);
+
+		 if(control == 0){
+			printf("Valor inválido\n");
+			
+			free(lista);
+
+			exit(EXIT_FAILURE);	
+		 }
 	}
 }
 

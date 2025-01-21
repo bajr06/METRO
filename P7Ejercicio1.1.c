@@ -6,18 +6,30 @@
 bool Burbuja(int * lista, const int cantidad){
 	bool control = true;
 	int guardado;
+	int vueltas = 0;
 	
 	do{
-		for(int k = 0; k < cantidad; k++){
+		for(int k = 0; k < cantidad - 1; k++){
 			if(lista[k] > lista[k+1]){
 				guardado = lista[k];
 				lista[k] = lista[k+1];
 				lista[k+1] = guardado;
 				control = true;
 			}
+			else
+			if(lista[k] < lista[k+1]){
+				control = false;
+				continue;
+			}
+
+			if(control == true){
+				vueltas++;	
+			}
 		}
+		vueltas = 0;
 	}
-	while(control);
+	//while(vueltas <=8);
+	while(vueltas != cantidad - 1);
 
 	return false;
 }

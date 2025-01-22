@@ -80,6 +80,6 @@ int main(int argc, char ** argv){
 	}
 	else{
 		printf("Inválido\n");
-		return 1;
+		return EXIT_SUCCESS;
 	}
 }

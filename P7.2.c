@@ -73,7 +73,7 @@ bool Burbuja(Estudiante * Clase, const int cantidad){
 }
 
 bool Burbuja_Caracteres(Estudiante * Clase, const int cantidad){
-	Estudiante guardado[1];
+	Estudiante guardado;
 	int intercambios = 0;
 	
 	do{
@@ -82,7 +82,7 @@ bool Burbuja_Caracteres(Estudiante * Clase, const int cantidad){
 		for(int k = 0; k < cantidad - 1; k++, Clase++){
 			for(int l = 0; l < MAX_CARACTERES; l++){
 				if(strncmp(Clase -> apellido + l, (*(&Clase[1].apellido)) + l, MAX_CARACTERES) != 0){
-					guardado[0] = Clase[0];
+					memcpy(&guardado,Clase[0],sizeof(Estudiante)); // Esto no funciona guardado[0] = Clase[0];. Hay que usar memcpy. TODO: 
 					Clase[0] = Clase[1];
 					Clase[1] = guardado[0];
 					intercambios++;

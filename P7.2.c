@@ -6,46 +6,45 @@
 #define MAX_CARACTERES 50
 
 typedef struct {
-    char nombre[MAX_CARACTERES];
-    char apellido[MAX_CARACTERES];
+	char nombre[MAX_CARACTERES];
+	char apellido[MAX_CARACTERES];
 	int nota;
 } Estudiante;
 
 void Inicializar_Estudiante(Estudiante * Inicializar, const char * Nombre, const char * Apellido, const int Nota){
 	strcpy(Inicializar -> nombre, Nombre);
-    strcpy(Inicializar -> apellido, Apellido);
-    Inicializar -> nota = Nota;
+	strcpy(Inicializar -> apellido, Apellido);
+	Inicializar -> nota = Nota;
 }
 
 void Agregar_Estudiante(Estudiante * Agregar, const int cantidad){
-
 	int nota;
-    char nombre[MAX_CARACTERES], apellido[MAX_CARACTERES];
-
+	char nombre[MAX_CARACTERES], apellido[MAX_CARACTERES];
+	
 	for (int i = 0; i < cantidad; ++i){
-
 		getchar();
+		
+		printf("Nombre: ");
+		fgets(nombre, MAX_CARACTERES, stdin);
+		nombre[strlen(nombre)-1] = '\0';
+		
+		printf("Apellido: ");
+		fgets(apellido, MAX_CARACTERES, stdin);
+		apellido[strlen(apellido)-1] = '\0';
+		
+		printf("Nota: ");
+		scanf("%d", &nota);
+		
+		Inicializar_Estudiante(&Agregar[i], nombre, apellido, nota);
 
-        printf("Nombre: ");
-        fgets(nombre, MAX_CARACTERES, stdin);
-        nombre[strlen(nombre)-1] = '\0';
-
-        printf("Apellido: ");
-        fgets(apellido, MAX_CARACTERES, stdin);
-        apellido[strlen(apellido)-1] = '\0';
-
-        printf("Nota: ");
-        scanf("%d", &nota);
-
-        Inicializar_Estudiante(&Agregar[i], nombre, apellido, nota);
+		puts("");
 	}
 }
 
 void Imprimir_Clase(Estudiante * Imprimir, int const cantidad){
 	for(int i = 0; i < cantidad; i++, Imprimir++){
-    printf("%s, %s, %d.\n",Imprimir->nombre, Imprimir->apellido, Imprimir->nota);
+		printf("%s, %s, %d.\n",Imprimir->nombre, Imprimir->apellido, Imprimir->nota);
 	}
-
 }
 
 bool Burbuja(Estudiante * Clase, const int cantidad){
@@ -79,12 +78,12 @@ bool Burbuja_Caracteres(Estudiante * Clase, const int cantidad){
 	do{
 		intercambios = 0;
 
-		for(int k = 0; k < cantidad - 1; k++, Clase++){
+		for(int k = 0; k < cantidad - 1; k++){
 			for(int l = 0; l < MAX_CARACTERES; l++){
-				if(strncmp(Clase -> apellido + l, (*(&Clase[1].apellido)) + l, MAX_CARACTERES) != 0){
-					memcpy(&guardado,Clase[0],sizeof(Estudiante)); // Esto no funciona guardado[0] = Clase[0];. Hay que usar memcpy. TODO: 
-					Clase[0] = Clase[1];
-					Clase[1] = guardado[0];
+				if(strncmp((*(&Clase[k] -> apellido)) + l, (*(&Clase[k+1].apellido)) + l, MAX_CARACTERES) != 0){
+					memcpy(&guardado, &Clase[k+1], sizeof(Estudiante)); // Esto no funciona guardado[0] = Clase[0];. Hay que usar memcpy. TODO: 
+					memcpy(&Clase[k], &Clase[k+1], sizeof(Estudiante));
+					memcpy(&Clase[k+1], &guardado, sizeof(Estudiante));
 					intercambios++;
 				}
 				else{

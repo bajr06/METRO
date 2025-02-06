@@ -26,9 +26,9 @@ int main(){
     
     char * palabra = (char *)malloc(MAX_PAL*sizeof(char));
 
-    if(palabra == NULL){ //Verifdicamos que el catalogo no sea nullo
+    if(palabra == NULL){ 
         printf("ERROR\n");
-        return EXIT_FAILURE; //en caso de que este sea null, devolvera un error y terminara el programa
+        return EXIT_FAILURE; 
     }
 
     printf("Introduce una palabra:");

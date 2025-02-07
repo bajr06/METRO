@@ -16,12 +16,6 @@ bool Buscar_Letras(const char *str, int ini, int fin) {
     return Buscar_Letras(str, ini + 1, fin - 1);
 }
 
-int Tamagno_Palabra(const char *str) {
-    
-    int len = strlen(str);
-    return Buscar_Letras(str, 0, len - 1);
-}
-
 int main(){
     
     char * palabra = (char *)malloc(MAX_PAL*sizeof(char));
@@ -33,8 +27,10 @@ int main(){
 
     printf("Introduce una palabra:");
     scanf("%s", palabra);
-
-    if (Tamagno_Palabra(palabra)){
+    
+    int len = strlen(palabra);
+    
+    if (Buscar_Letras(palabra, 0, len - 1);){
         printf("%s es palindroma.\n", palabra);
     }else{
         printf("%s no es palindroma.\n", palabra);

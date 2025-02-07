@@ -30,7 +30,7 @@ int main(){
     
     int len = strlen(palabra);
     
-    if (Buscar_Letras(palabra, 0, len - 1);){
+    if (Buscar_Letras(palabra, 0, len - 1)){
         printf("%s es palindroma.\n", palabra);
     }else{
         printf("%s no es palindroma.\n", palabra);

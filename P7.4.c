@@ -25,7 +25,7 @@ int main(){
         return EXIT_FAILURE; 
     }
 
-    printf("Introduce una palabra:");
+    printf("Introduce una palabra: ");
     scanf("%s", palabra);
     
     int len = strlen(palabra);

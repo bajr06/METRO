@@ -14,11 +14,10 @@ void cifrado_cesar (char * clave, const int saltos);
 
 void descifrado_cesar (char * clave, const int saltos);
 
-
 int main(){
 	int cantidad, control;
 
-	puts("¿De cuantos carácteres será tu clave?");
+	puts("¿De cuantos carácteres será tu clave (sumando 2)?");
 	control = scanf("%d", &cantidad);
 	
 	printf("\n");

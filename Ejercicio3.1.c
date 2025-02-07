@@ -10,6 +10,51 @@ typedef struct {
 } Coordenada;
 
 // Funcion para inicializar el tablero con bordes y colocar al jugador en el centro
+void configurarTablero(char **matriz, int alto, int ancho, Coordenada *posicion);
+
+// Funcion para imprimir el tablero en la consola
+void mostrarTablero(char **matriz, int alto, int ancho);
+
+// Funcion para mover al jugador en el tablero según la tecla presionada
+void desplazar(char **matriz, int alto, int ancho, Coordenada *posicion, char movimiento);
+
+int main() {
+    int alto = DIMENSION, ancho = DIMENSION;
+
+    // Asignar memoria para el tablero
+    char **matriz = malloc(alto * sizeof(char *));
+    if (matriz == NULL) {
+        printf("Error de memoria\n");
+        return EXIT_FAILURE;
+    }
+    for (int i = 0; i < alto; i++) {
+        matriz[i] = malloc(ancho * sizeof(char));
+        if (matriz[i] == NULL) {
+            printf("Error de memoria en la fila %d\n", i);
+            for (int j = 0; j < i; j++) {
+                free(matriz[j]);
+            }
+            free(matriz);
+            return EXIT_FAILURE;
+        }
+    }
+   
+    Coordenada posicion;
+    configurarTablero(matriz, alto, ancho, &posicion);
+
+    char tecla;
+    do {
+        mostrarTablero(matriz, alto, ancho);
+        printf("Mueve con 'w', 'a', 's', 'd' o presiona 'x' para salir: ");
+        scanf(" %c", &tecla); //Guardamos la tecla dada por el usuario
+        desplazar(matriz, alto, ancho, &posicion, tecla);
+    } while (tecla != 'x');
+
+    free(matriz);
+    return 0;
+}
+
+// Funcion para inicializar el tablero con bordes y colocar al jugador en el centro
 void configurarTablero(char **matriz, int alto, int ancho, Coordenada *posicion) {
     for (int i = 0; i < alto; i++) {
         for (int j = 0; j < ancho; j++) {
@@ -57,31 +102,4 @@ void desplazar(char **matriz, int alto, int ancho, Coordenada *posicion, char mo
         posicion->columna = nuevaColumna;
         matriz[posicion->fila][posicion->columna] = '@'; // Colocar jugador en nueva posición
     }
-}
-
-int main() {
-    int alto = DIMENSION, ancho = DIMENSION;
-
-    // Asignar memoria para el tablero
-    char **matriz = malloc(alto * sizeof(char *));
-    for (int i = 0; i < alto; i++) {
-        matriz[i] = malloc(ancho * sizeof(char));
-    }
-   
-    Coordenada posicion;
-    configurarTablero(matriz, alto, ancho, &posicion);
-
-    char tecla;
-    do {
-        mostrarTablero(matriz, alto, ancho);
-        printf("Mueve con 'w', 'a', 's', 'd' o presiona 'x' para salir: ");
-        scanf(" %c", &tecla); //Guardamos la tecla dada por el usuario
-        desplazar(matriz, alto, ancho, &posicion, tecla);
-    } while (tecla != 'x');
-
-    // Liberar la memoria del tablero
-
-    free(matriz);
-
-    return 0;
 }

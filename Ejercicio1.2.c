@@ -11,9 +11,9 @@ void Anaidir(int * lista, const int cantidad){
 	
 	printf("Escriba cada número a añadir a la lista\n");
 	for(int i = 0; i < cantidad; i++){
-		 control = scanf("%d", &lista[i]);
+		control = scanf("%d", &lista[i]);
 
-		 if(control == 0){
+		if(control == 0){
 			printf("Valor inválido\n");
 			
 			free(lista);
@@ -32,11 +32,15 @@ void Mostrar(int * lista, const int cantidad){
 
 
 int main(int argc, char ** argv){
-	int cantidad;
+	int cantidad, control;
 
 	if(argc == 1){
 		printf("¿Qué cantidad de números quieres procesar?\n");
-		scanf("%d", &cantidad);
+		control = scanf("%d", &cantidad);
+		if(cantidad <= 0 || control == 0){ // compruebo que el número sea positivo y además, como el scanf me devuelve un 1 si introduzco un número, igualo control a 0 indicando que ese valor no es un nº
+			printf("Debes introducir un número positivo\n");
+			return EXIT_FAILURE;
+		}
 
 		int * lista = (int *)malloc(cantidad * sizeof(int));
 
@@ -54,9 +58,7 @@ int main(int argc, char ** argv){
 		free(lista);
 
 		return 0;
-	}
-	else
-	if(argc == 3){
+	} else if(argc == 3){
 		if(strcmp(argv[1], "comparar") == 0){
 			cantidad = atoi(argv[2]);
 
@@ -77,8 +79,7 @@ int main(int argc, char ** argv){
 
 			return 0;
 		}
-	}
-	else{
+	} else {
 		printf("Inválido\n");
 		return EXIT_SUCCESS;
 	}

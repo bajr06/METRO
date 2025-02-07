@@ -1,17 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
-1. Pedid al usuario las dimensiones `n` (filas) y `m` (columnas).
-2. Reservad (o declarad) una matriz `n x m`.
-3. Rellenadla con valores aleatorios, etc.
-4. Calculad la **suma del contorno**:
-    - Primera fila
-    - Última fila
-    - Primera columna
-    - Última columna
-5. Mostrad la suma y liberad la memoria (si la habéis reservado dinámicamente).
-*/
 int suma(int ** matriz, int n, int m);
 
 int main(){
@@ -34,7 +23,7 @@ int main(){
 		}
 
 	// Reservar memoria para la matriz
-	int ** matriz = (int **) malloc (n * sizeof(int)); // reservamos memoria para cada fila
+	int ** matriz = (int **) malloc (n * sizeof(int*)); // reservamos memoria para cada fila de punteros a enteros
 	for (int i = 0; i < n; i++){
 	    matriz[i] = (int *) malloc (m * sizeof(int)); // reservamos memoria para cada columna, y ponemos matriz[i] ya que queremos reservar memoria para la columna de esa fila, es decir, si m vale 3, reservamos 3 "espacios" en el elemento 1 de esa fila
 	}
@@ -65,6 +54,10 @@ int main(){
 	int suma_main = suma(matriz, n, m);	// llamo a mi función pasando los valores y la meto en una variable para poder imprimirla
 	printf("La suma del contorno: %d\n", suma_main);
 
+for (int i = 0; i < n; i++) {
+	free(matriz[i]);
+}
+
 free(matriz);
 return EXIT_SUCCESS;
 }
@@ -89,7 +82,7 @@ int suma(int ** matriz, int n, int m){
 
 	// Suma de la última columna
 	for (int i = 0; i < n; i++){ // recorremos todos los números de la última columna
-    	suma += matriz[i][n-1];
+    	suma += matriz[i][m-1];
 	}
 
 	return suma;

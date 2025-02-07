@@ -11,7 +11,7 @@ typedef struct {
 	int nota;
 } Estudiante;
 
-void Inicializar_Estudiante(Estudiante * Inicializar, const char * Nombre, const char * Apellido, const int Nota);
+void Inicializar_Estudiante(Estudiante * Inicializar, const char * Nombre, const char * Apellido, const int Nota); 
 
 void Agregar_Estudiante(Estudiante * Agregar, const int cantidad);
 
@@ -22,20 +22,27 @@ bool Burbuja(Estudiante * Clase, const int cantidad);
 bool Burbuja_Caracteres(Estudiante * Clase, const int cantidad);
 
 int main(){
-	
-	int cantidad;
+	int cantidad, control;
 
 	puts("¿Que cantidad de estudiantes quieres procesar?");
-	scanf("%d", &cantidad);
+	control = scanf("%d", &cantidad);
+		if(cantidad <= 0 || control == 0){ // compruebo que el número sea positivo y además, como el scanf me devuelve un 1 si introduzco un número, igualo control a 0 indicando que ese valor no es un nº
+			printf("Debes introducir un número positivo\n");
+			return EXIT_FAILURE;
+		}
 
 	Estudiante * Clase = (Estudiante *)malloc(cantidad * sizeof(Estudiante));
+	if(Clase == NULL){ // comprobamos si hay memoria disponible y de no ser así, salir del programa
+        printf("Error, no hay memoria");
+        return EXIT_FAILURE;
+    }
 
-	Agregar_Estudiante(Clase, cantidad);
+	Agregar_Estudiante(Clase, cantidad); // llamamos a nuestra función para introducir nuestros datos de los alumnos
 
 	puts("Estos son los estudiantes que hay en la clase:");
-	Imprimir_Clase(Clase,cantidad);
+	Imprimir_Clase(Clase,cantidad); // los imprimimos todos como "clase"
 
-	Burbuja(Clase, cantidad);
+	Burbuja(Clase, cantidad); // hacemos las modificaciones para ordenarlos por nota y por apellido
 	
 	printf("\n");
 
@@ -66,17 +73,22 @@ void Agregar_Estudiante(Estudiante * Agregar, const int cantidad){
 	
 	for (int i = 0; i < cantidad; ++i){
 		getchar();
+		int control = 0;
 		
 		printf("Nombre: ");
-		fgets(nombre, MAX_CARACTERES, stdin);
-		nombre[strlen(nombre)-1] = '\0';
+		fgets(nombre, MAX_CARACTERES, stdin); // el problema de esto es que también incluye, aparte del nombre, el \n que hacemos al darle a intro para introducir la nota
+		nombre[strlen(nombre)-1] = '\0'; // por lo que aquí restamos ese \n y lo sustituimos por \0 para indicar el final de la cadena de caracteres
 		
-		printf("Apellido: ");
+		printf("Apellido: "); // aquí igual que con el nombre
 		fgets(apellido, MAX_CARACTERES, stdin);
 		apellido[strlen(apellido)-1] = '\0';
 		
 		printf("Nota: ");
-		scanf("%d", &nota);
+		control = scanf("%d", &nota);
+		if(nota <= 0 || control == 0){ // compruebo que el número sea positivo y además, como el scanf me devuelve un 1 si introduzco un número, igualo control a 0 indicando que ese valor no es un nº
+			printf("Debes introducir un número positivo\n");
+			exit(EXIT_FAILURE);
+		}
 		
 		Inicializar_Estudiante(&Agregar[i], nombre, apellido, nota);
 
@@ -86,7 +98,7 @@ void Agregar_Estudiante(Estudiante * Agregar, const int cantidad){
 
 void Imprimir_Clase(Estudiante * Imprimir, int const cantidad){
 	for(int i = 0; i < cantidad; i++, Imprimir++){
-		printf("%s, %s, %d.\n",Imprimir->nombre, Imprimir->apellido, Imprimir->nota);
+		printf("%s, %s, %d.\n",Imprimir->nombre, Imprimir->apellido, Imprimir->nota); // apuntamos al puntero que tiene almacenado los datos de los estudiantes con ->
 	}
 }
 
@@ -95,7 +107,7 @@ bool Burbuja(Estudiante * Clase, const int cantidad){
 	int intercambios = 0;
 	
 	do{
-		intercambios = 0;
+		intercambios = 0; // reiniciamos el contador en cada vuelta
 
 		for(int k = 0; k < cantidad - 1; k++){
 			if(Clase[k].nota > Clase[k+1].nota){
@@ -108,9 +120,7 @@ bool Burbuja(Estudiante * Clase, const int cantidad){
 				continue;
 			}
 		}
-	}
-	while(intercambios != 0);
-
+	} while(intercambios != 0);
 	return true;
 }
 

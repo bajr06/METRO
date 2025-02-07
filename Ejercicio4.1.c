@@ -8,10 +8,10 @@
 // Funcion recursiva para verificar si una palabra es un palindromo
 bool Buscar_Letras(const char *str, int ini, int fin) {
     
-    if (ini >= fin) // Caso base: si los índices se cruzan, es un palíndromo
+    if (ini >= fin) // Caso base: si los indices se cruzan, es un palíndromo
         return true;
     
-    if (str[ini] != str[fin]) // Si los caracteres no coinciden, no es palíndromo
+    if (str[ini] != str[fin]) // Si los caracteres no coinciden, no es palindromo
         return false;
 
     return Buscar_Letras(str, ini + 1, fin - 1); // Llamada recursiva con los siguientes caracteres
@@ -38,7 +38,7 @@ int main(){
         printf("%s no es palindroma.\n", palabra);
     }
     
-    free(palabra); // Libera la memoria asignada dinámicamente
+    free(palabra); // Libera la memoria
 
     return 0;
 }

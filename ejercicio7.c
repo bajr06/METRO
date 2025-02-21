@@ -3,13 +3,13 @@
 
 // Función para mirar si el número introducido es primo o no
 int primo(int numero){
-    if(numero < 2) return 0; // no es primo
+	if(numero < 2) return 0; // no es primo
+				 //
+	for(int i = 2; i < numero; i++){ // miramos a ver si el número es divisible por 2, ya que los primos son impares
+		if (numero % i == 0) return 0; // no es primo si el número es divisible por i
+	}
 
-    for(int i = 2; i < numero; i++){ // miramos a ver si el número es divisible por 2, ya que los primos son impares
-        if (numero % i == 0) return 0; // no es primo si el número es divisible por i
-    }
-
-    return 1; // los números restantes son primos
+	return 1; // los números restantes son primos
 }
 
 int main(){
